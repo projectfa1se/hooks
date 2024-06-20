@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.success {
+  background-color: rgb(118, 226, 118);
+}
+
+.danger{
+  background-color: rgb(223, 90, 90);
+}
