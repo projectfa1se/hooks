@@ -1,28 +1,27 @@
-import React, {useState,useEffect} from 'react'
-import './App.css';
+import React, {useState, useCallback} from 'react'
+import ItemsList from './ItemsList.jsx'
 
 export default function App(){
-  const [type,setType] = useState('users')
+  const [colored, setColored] = useState(false)
+  const [count,setCount] = useState(1)
 
-  useEffect(()=>{
-    console.log('render')
-  })
+  const styles = {
+    color: colored? 'black': 'green'
+  }
+
+  const generateItemsFromAPI = useCallback(
+    ()=>{
+      return new Array(count).fill('').map((_, i)=> `Элемент ${i+1}`)
+    },[count]
+)
+
   return(
     <>
-    {/* 27:27 */}
-      <h1>Ресурс: {type}</h1>
+      <h1 style={styles}>Количество элементов: {count}</h1>
+      <button className={'btn btn-success'} onClick={()=>{setCount(prev=>prev+1)}}>Добавить</button>
+      <button className={'btn btn-warning'} onClick={()=>{setColored(prev=>!prev)}}>Изменить</button>
 
-      <button onClick={()=>{
-        setType('users')
-      }}>Пользователи</button>
-
-      <button onClick={()=>{
-        setType('TODO')
-      }}>TODO</button>
-      
-      <button onClick={()=>{
-        setType('posts')
-      }}>Посты</button>
+      <ItemsList getItems={generateItemsFromAPI}/>
     </>
   )
 }
